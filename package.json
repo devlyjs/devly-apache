@@ -1,0 +1,19 @@
+{
+  "name": "@lantis/apache",
+  "version": "0.1.0",
+  "description": "Adds cli commands to @lantis for apache.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "lantis",
+    "@lantis",
+    "apache"
+  ],
+  "author": "Aori Nevo",
+  "license": "ISC",
+  "devDependencies": {
+    "redux": "^4.0.0"
+  }
+}
