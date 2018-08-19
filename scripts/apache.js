@@ -31,7 +31,6 @@ function updateBarrelFile(force, configBarrels, projectPath) {
 }
 
 function updateCertificatesAndKeys(force, certificatesAndKeys, projectPath) {
-  console.log('my certs: ', certificatesAndKeys)
   for (const item of certificatesAndKeys) { // eslint-disable-line no-restricted-syntax
     updateCertOrKey(item.content, `${projectPath}/${item.directory}`, item.fileName, force);
   }

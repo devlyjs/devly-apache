@@ -1,4 +1,5 @@
 const ADD_APACHE_CONFIG = 'ADD_APACHE_CONFIG';
+const ADD_APACHE_COMMANDS = 'ADD_APACHE_COMMANDS';
 
 function addApacheConfig (config) {
   return {
@@ -7,8 +8,18 @@ function addApacheConfig (config) {
   }
 }
 
+function addApacheCommands (yargs, apache) {
+  return {
+    type: ADD_APACHE_COMMANDS,
+    yargs,
+    apache
+  }
+}
+
 
 module.exports = {
   addApacheConfig,
-  ADD_APACHE_CONFIG
+  addApacheCommands,
+  ADD_APACHE_CONFIG,
+  ADD_APACHE_COMMANDS
 }
