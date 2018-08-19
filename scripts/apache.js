@@ -24,13 +24,14 @@ function updateCertOrKey(fileContent, pathToWrite, fileName, force) {
   return new Error('file already exists');
 }
 
-function updateBarrelFile(force, configBarrels) {
+function updateBarrelFile(force, configBarrels, projectPath) {
   for (const item of configBarrels) { // eslint-disable-line no-restricted-syntax
     updateCertOrKey(item.content, `${projectPath}/${item.directory}`, item.fileName, force);
   }
 }
 
-function updateCertificatesAndKeys(force, certificatesAndKeys) {
+function updateCertificatesAndKeys(force, certificatesAndKeys, projectPath) {
+  console.log('my certs: ', certificatesAndKeys)
   for (const item of certificatesAndKeys) { // eslint-disable-line no-restricted-syntax
     updateCertOrKey(item.content, `${projectPath}/${item.directory}`, item.fileName, force);
   }
@@ -57,9 +58,9 @@ function updateHttpdVhosts(force, ports, template, filename, directory = `${proj
   }
 }
 
-function initProxyServer(force, certificatesAndKeys, configBarrels) {
-  updateCertificatesAndKeys(force, certificatesAndKeys);
-  updateBarrelFile(force, configBarrels);
+function initProxyServer(force, certificatesAndKeys, configBarrels, projectPath) {
+  updateCertificatesAndKeys(force, certificatesAndKeys, projectPath);
+  updateBarrelFile(force, configBarrels, projectPath);
   spawnSync('sudo apachectl restart', [], {
     shell: true,
   });
@@ -72,6 +73,7 @@ module.exports = class Apache {
     this.store = store;
   }
   init(force) {
-    initProxyServer(force, this.store.certificatesAndKeys, this.store.configBarrels);
+    const {projectPath, certificatesAndKeys, configBarrels } = this.store.getState().apache;
+    initProxyServer(force, certificatesAndKeys, configBarrels, projectPath);
   }
 };
