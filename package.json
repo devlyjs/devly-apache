@@ -1,10 +1,14 @@
 {
   "name": "@lantis/lantis-apache",
-  "version": "0.1.0",
-  "description": "Adds cli commands to @lantis for apache.",
+  "version": "1.0.0",
+  "description": "Apache plugin for `@lantis` cli manager built with redux and yargs.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aorinevo/lantis-apache"
   },
   "keywords": [
     "lantis",
