@@ -1,9 +1,7 @@
 const fs = require('fs');
-const props = require('../../../reapps-properties.json');
 const winston = require('winston');
 const shell = require('shelljs');
 const { spawnSync } = require('child_process');
-const { certificatesAndKeys, configBarrels } = require('../../../manifests/apache');
 
 function updateCertOrKey(fileContent, pathToWrite, fileName, force) {
   if (!fs.existsSync(pathToWrite)) {
@@ -26,19 +24,19 @@ function updateCertOrKey(fileContent, pathToWrite, fileName, force) {
   return new Error('file already exists');
 }
 
-function updateBarrelFile(force) {
+function updateBarrelFile(force, configBarrels) {
   for (const item of configBarrels) { // eslint-disable-line no-restricted-syntax
-    updateCertOrKey(item.content, `${props.proxyServer.path}/${item.directory}`, item.fileName, force);
+    updateCertOrKey(item.content, `${projectPath}/${item.directory}`, item.fileName, force);
   }
 }
 
-function updateCertificatesAndKeys(force) {
+function updateCertificatesAndKeys(force, certificatesAndKeys) {
   for (const item of certificatesAndKeys) { // eslint-disable-line no-restricted-syntax
-    updateCertOrKey(item.content, `${props.proxyServer.path}/${item.directory}`, item.fileName, force);
+    updateCertOrKey(item.content, `${projectPath}/${item.directory}`, item.fileName, force);
   }
 }
 
-function updateHttpdVhosts(force, ports, template, filename, directory = `${props.proxyServer.path}/fds`) {
+function updateHttpdVhosts(force, ports, template, filename, directory = `${projectPath}/fds`) {
   if (!fs.existsSync(`${directory}`) || force) {
     spawnSync(`sudo mkdir ${directory}`, [], {
       shell: true,
@@ -59,9 +57,9 @@ function updateHttpdVhosts(force, ports, template, filename, directory = `${prop
   }
 }
 
-function initProxyServer(force) {
-  updateCertificatesAndKeys(force);
-  updateBarrelFile(force);
+function initProxyServer(force, certificatesAndKeys, configBarrels) {
+  updateCertificatesAndKeys(force, certificatesAndKeys);
+  updateBarrelFile(force, configBarrels);
   spawnSync('sudo apachectl restart', [], {
     shell: true,
   });
@@ -69,9 +67,11 @@ function initProxyServer(force) {
   return true;
 }
 
-module.exports = {
-  update: {
-    httpdVhosts: updateHttpdVhosts,
-  },
-  init: initProxyServer,
+module.exports = class Apache {
+  constructor( store ){
+    this.store = store;
+  }
+  init(force) {
+    initProxyServer(force, this.store.certificatesAndKeys, this.store.configBarrels);
+  }
 };
