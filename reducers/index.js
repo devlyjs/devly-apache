@@ -1,6 +1,7 @@
 const winston = require('winston');
 const { ADD_APACHE_CONFIG, ADD_APACHE_COMMANDS } = require('../actions');
 const initialState = {};
+winston.cli();
 
 function addApacheConfig(state, config){
   return {...state, ...config};
@@ -15,7 +16,7 @@ function addApacheCommands(state, yargs, apache){
       },
     },
     function handler(argv) {
-      winston.log('Initializing Proxy Server!');
+      winston.log('info','Initializing Proxy Server!');
       apache.init(argv.force);
     }
   );
