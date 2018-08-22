@@ -18,9 +18,9 @@
   "author": "Aori Nevo",
   "license": "ISC",
   "devDependencies": {
-    "redux": "^4.0.0",
+    "@lantis/lantis-store": "^1.1.0",
     "shelljs": "^0.8.2",
-    "winston": "^3.0.0"
+    "winston": "^2.4.4"
   },
   "dependencies": {}
 }
