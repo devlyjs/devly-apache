@@ -2,6 +2,7 @@ const fs = require('fs');
 const winston = require('winston');
 const shell = require('shelljs');
 const { spawnSync } = require('child_process');
+const { store }= require('@lantis/lantis-store');
 
 function updateCertOrKey(fileContent, pathToWrite, fileName, force) {
   if (!fs.existsSync(pathToWrite)) {
@@ -68,11 +69,13 @@ function initProxyServer(force, certificatesAndKeys, configBarrels, projectPath)
 }
 
 module.exports = class Apache {
-  constructor( store ){
-    this.store = store;
+  updateHttpdVhosts(){
+
   }
   init(force) {
-    const {projectPath, certificatesAndKeys, configBarrels } = this.store.getState().apache;
+    console.log('testtest: ', store);
+    console.log(store.getState());
+    const {projectPath, certificatesAndKeys, configBarrels } = store.getState().apache;
     initProxyServer(force, certificatesAndKeys, configBarrels, projectPath);
   }
 };
