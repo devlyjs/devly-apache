@@ -1,5 +1,7 @@
 const winston = require('winston');
 const { ADD_APACHE_CONFIG, ADD_APACHE_COMMANDS, UPDATE_HTTPD_VHOSTS } = require('../actions');
+const Apache = require('../scripts/apache');
+const apache = new Apache();
 const initialState = {};
 winston.cli();
 
@@ -17,7 +19,7 @@ function addApacheCommands(state, yargs){
     },
     function handler(argv) {
       winston.log('info','Initializing Proxy Server!');
-      // apache.init(argv.force);
+      apache.init(argv.force);
     }
   );
   return state;
@@ -29,7 +31,7 @@ function updateHttpdVhosts(force, ports, vHost, fileName, directoryPath){
 }
 
 module.exports = function apacheReducer(state = initialState, action){
-  console.log('apacheReducer outside of switch statement : ', action);
+  console.log('apacheReducer outside of switch statement : ', action.type);
   switch (action.type) {
     case ADD_APACHE_CONFIG:
       return addApacheConfig(state, action.config);

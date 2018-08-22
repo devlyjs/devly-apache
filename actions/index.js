@@ -1,3 +1,5 @@
+// Use higher order reducers here
+
 const ADD_APACHE_CONFIG = 'ADD_APACHE_CONFIG';
 const ADD_APACHE_COMMANDS = 'ADD_APACHE_COMMANDS';
 

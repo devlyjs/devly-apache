@@ -1,14 +1,14 @@
 {
-  "name": "@lantis/lantis-apache",
+  "name": "@devly/devly-apache",
   "version": "1.1.0",
-  "description": "Apache plugin for `@lantis` cli manager built with redux and yargs.",
+  "description": "Apache plugin for `@devly` cli manager built with redux and yargs.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/aorinevo/lantis-apache"
+    "url": "https://github.com/aorinevo/devly-apache"
   },
   "keywords": [
     "lantis",
