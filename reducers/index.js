@@ -1,5 +1,6 @@
 const winston = require('winston');
 const { ADD_APACHE_CONFIG, ADD_APACHE_COMMANDS, UPDATE_HTTPD_VHOSTS } = require('../actions');
+const yargs = require('@devly/devly-cli');
 const Apache = require('../scripts/apache');
 const apache = new Apache();
 const initialState = {};
@@ -9,7 +10,7 @@ function addApacheConfig(state, config){
   return {...state, ...config};
 }
 
-function addApacheCommands(state, yargs){
+function addApacheCommands(state){
   yargs.command('apache init','Init file, app, or machine',
     {
       force: {
@@ -37,9 +38,9 @@ module.exports = function apacheReducer(state = initialState, action){
       return addApacheConfig(state, action.config);
     case ADD_APACHE_COMMANDS:
       console.log('add command reducer: ');
-      return addApacheCommands(state, action.yargs, action.apache);
+      return addApacheCommands(state);
     case UPDATE_HTTPD_VHOSTS:
-      return updateHttpdVhosts(state, action.force, action.vHost, action.fileName, action.directoryPath);
+      return updateHttpdVhosts(state);
     default:
       return state;
   }
