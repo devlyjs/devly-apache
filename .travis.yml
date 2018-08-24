@@ -2,7 +2,19 @@ deploy:
   provider: npm
   email: aorinevo@gmail.com
   api_key:
-    secure: AHqK9Eh1zLDTHhpJIGnAMPicvSsXdi7goE0DQrXF4iXWWTG843OioOaZ3L3Bijw9748rxXpSvBG4nKAmHpycEmD2VFg4r34ADifVWL8//hc4s6TrxmMTdsk4jWszN7LLTTEjIlWd1mbotHXao9CXXSNv4Z5XjMBYzLyhnlwVDNYb++RmqJtxdXnhGfqFaKSA9PYPRiECpsyTTc5q+OTATViZGDIhOmds0UUzQcwHYXeq2nNeGeU1gqHUDlFBcf09Ok9IXSzKOsKEQRd0YvdlMWxV5n9PyLwpGGBgGA7Q+FaY+FoCpq4sgQLDkKjIfVqel7tVNPJ09JZcJMkLJp07hGrDpwN8slvxx7yDQWBqWfni3JDP3TlytOq+HGRLqdaPAIimvP3IsGTvDR5iNcdzLpMptn4Cqxt50WmYgz2jebHkBBG0LfFnvTVfLZ0j7gpJba2goFt1+JEgUEFSQ8CGEMLEQlQ3Ht8i/f7rhZha3QFECAhatGcMXQehzwf6mdN+ZVeD1HSDn/KPB1XjpLNvJthwPNlswTtOFwbrA3/8pAJnGLcASeBzFApIw4+zJBtHjWadalWbqWr7OfG4QhuVgwCqA8XhtWWn3n6eJ00LpSrDHLZ5y/vXPeTNBDFUN1YdjiMArnAVbpu6aBGjDXyUYMqsTbVs1hX1y1Tpic/MGZk=
-  on:
-    tags: true
-    repo: devlyjs/devly-apache
+    secure: UTFUQ+q4r2KpWoFqwNYwKKaPwYPYn+E2TXR0VjQ/1S1UHfgaRbxw/MRoGKDtoeKVnTRVQlTgQrPgjU5624Da21+zP5gmCGMKmTxI7hFQbrFojvMCCNn9BezMiPiD1c5xQyn/Rnp7l9dHceEXm/mztxIg7UC4Ln0gIV9stpXjY/IAO4N7E/ESykfGjMvULh2NsVJPRSEsz0OqmOdcn4eZJY18YUi49JHgVaK0V/uPDqyasSzSMo0oOqUv5BaRX0we5/f1Zlaz8TR3QkPDouAkQYNzHezz/srQ0w7rJxMMo5SzoRUT2hslEUnwG13txpYrxfIEnFzcjY/kL+hjKLj8bwsK4SPAfT31XnEZUAYHQ1Tgkd6xeitUCTB2tjDdhpWxZSmGzcKOgErOECDC7c4ZK9CnYy947aKuwRcdDly7izYhYgteh1qVRnmqF0JdvMMdeuXeNPuvhEPBEpshbnRx2PWQeGc/HH7JUwVCv7/RWpoFaYdGt7RhBXQUoCj2fjBmXs+2qzCXBM1JmDQxRYzYD/oco6+BXdG19QtCybhHJMw7AMAk1gJfD/c7b18EZ1GlLiXiXVZLOS2MtbUXEEheC1Fq7i2C9PTnW6QVw92RTY7Yb6TRXgpRPRxx/5P+taEymzxfdSEeUrHUxIYCPk4FlhQdtQrLOA3lvNRDVdjJB9k=
+
+language: node_js
+
+os:
+  - linux
+  - osx
+
+cache:
+  directories:
+    - "node_modules"
+
+node_js:
+  - "6"
+  - "8"
+  - "10"
