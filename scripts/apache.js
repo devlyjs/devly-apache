@@ -2,7 +2,7 @@ const fs = require('fs');
 const winston = require('winston');
 const shell = require('shelljs');
 const { spawnSync } = require('child_process');
-const { store }= require('@lantis/lantis-store');
+const { store }= require('@devly/devly-store');
 
 function updateCertOrKey(fileContent, pathToWrite, fileName, force) {
   if (!fs.existsSync(pathToWrite)) {
