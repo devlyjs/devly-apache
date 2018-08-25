@@ -1,3 +1,3 @@
-const {store, reducerRegistry} = require('@lantis/lantis-store');
+const {store, reducerRegistry} = require('@devly/devly-store');
 
 reducerRegistry.register('apache', require('./reducers'));
