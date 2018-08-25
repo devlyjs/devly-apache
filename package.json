@@ -4,21 +4,21 @@
   "description": "Apache plugin for `@devly` cli manager built with redux and yargs.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/aorinevo/devly-apache"
   },
   "keywords": [
-    "lantis",
-    "@lantis",
+    "devly",
+    "@devly",
     "apache"
   ],
   "author": "Aori Nevo",
   "license": "ISC",
   "devDependencies": {
-    "@lantis/lantis-store": "^1.1.0",
+    "@devly/devly-store": "^1.1.0",
     "shelljs": "^0.8.2",
     "winston": "^2.4.4"
   },
