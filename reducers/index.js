@@ -32,12 +32,10 @@ function updateHttpdVhosts(force, ports, vHost, fileName, directoryPath){
 }
 
 module.exports = function apacheReducer(state = initialState, action){
-  console.log('apacheReducer outside of switch statement : ', action.type);
   switch (action.type) {
     case ADD_APACHE_CONFIG:
       return addApacheConfig(state, action.config);
     case ADD_APACHE_COMMANDS:
-      console.log('add command reducer: ');
       return addApacheCommands(state);
     case UPDATE_HTTPD_VHOSTS:
       return updateHttpdVhosts(state);

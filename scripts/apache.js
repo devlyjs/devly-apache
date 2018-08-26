@@ -73,8 +73,6 @@ module.exports = class Apache {
 
   }
   init(force) {
-    console.log('testtest: ', store);
-    console.log(store.getState());
     const {projectPath, certificatesAndKeys, configBarrels } = store.getState().apache;
     initProxyServer(force, certificatesAndKeys, configBarrels, projectPath);
   }
