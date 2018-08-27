@@ -1,57 +1,74 @@
 # Introduction
 
-Apache plugin for `@lantis` cli manager built with redux and yargs.
+Apache plugin for `@devly` cli manager built with redux and yargs.
 
 # Installation
 
-Install `redux`, `yargs`, and `@lantis/lantis-apache` in your project.
+To add devly-apache plugin to your project, first make sure your project is set-up to consume Devly plugins (see https://github.com/aorinevo/devly-example#introduction).
+
+
+Next, install `@devly/devly-apache`:
 
 ```bash
-npm i redux yargs @lantis/lantis-apache
+npm i @devly/devly-apache
 ```
 
-# Set-up
+# Integration
 
-All lantis plugins assume that the consumer has the following directory structure somewhere in their working directory:
+Use `addApacheConfig` action creator to update the apache state in the devly-store.  It is recommneded to place the initialState for apache in a `manifests/apache.js` file and requiring that file within the file that dispatches the action.
+
+```js
+// mainfests/apache.js
+
+module.exports = {
+  projectPath: '/etc/apache2',
+  configBarrels: [
+    {
+      fileName: 'test-main.conf',
+      content: 'some content',
+      directory: 'other',
+    },
+  ],
+  certificatesAndKeys: [
+    {
+      fileName: 'cert.crt',
+      content: 'some cert 1',
+      directory: 'cert',
+    },
+    {
+      fileName: 'cert.key',
+      content: 'some key 1',
+      directory: 'cert',
+    },
+    {
+      fileName: 'server.crt',
+      content: 'some cert 2',
+      directory: 'cert',
+    },
+    {
+      fileName: 'server.key',
+      content: 'some key 2',
+      directory: 'cert',
+    },
+  ],
+};
 ```
- ├── cli.js
- ├── actions
- ├── reducers
- └── store.js
-```
 
-`reducers/index.js` is where you add the plugins' reducers
+It is recommended that the consumer create a `plugins/index.js` barrel file for the devly plugins it consumes.
 
-```
-const { combineReducers } = require('redux');
-const apacheReducer = require('@lantis/lantis-apache/reducers');
+```js
+// plugins/index.js
 
-module.exports = combineReducers({
-  apache: apacheReducer
-});
-```
+require('./apache.js');
 
-`store.js`
+// plugins/apache.js
+const {store} = require('@devly/devly-store');
+const {addApacheConfig, addApacheCommands} = require('@devly/devly-apache/actions');
+const {dispatch} = store;
 
-```
-const {createStore} = require('redux');
-const rootReducer = require('./reducers');
+require('@devly/devly-apache');
 
-const store = createStore(rootReducer);
+dispatch(addApacheConfig(require('./manifests/apache')));
 
-module.exports = store
-```
-
-`cli.js`
-
-```
-const store = require('../scripts/reapps/store');
-const yargs = require('yargs');
-const {addApacheConfig, addApacheCommands} = require('@lantis/lantis-apache/actions');
-const Apache = require('@lantis/lantis-apache/scripts/apache');
-
-store.dispatch(addApacheConfig(require('../manifests/apache')));
-store.dispatch(addApacheCommands(yargs, new Apache(store)));
-
-module.exports = yargs;
+dispatch(addApacheCommands());
 ```
