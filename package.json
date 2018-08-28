@@ -15,7 +15,8 @@
   "keywords": [
     "devly",
     "@devly",
-    "apache"
+    "apache",
+    "devly-apache"
   ],
   "author": "Aori Nevo",
   "license": "ISC",
