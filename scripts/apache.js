@@ -25,10 +25,12 @@ function updateCertOrKey(fileContent, pathToWrite, fileName, force) {
   return new Error('file already exists');
 }
 
-function updateBarrelFile(force, configBarrels, projectPath) {
-  for (const item of configBarrels) { // eslint-disable-line no-restricted-syntax
-    updateCertOrKey(item.content, `${projectPath}/${item.directory}`, item.fileName, force);
-  }
+function compileBarrelFileList(force, configBarrels) {
+  console.log('configBarrels: ', configBarrels);
+  configBarrels.forEach(item => {
+    console.log('item: ', item);
+    updateBarrelFile(item.content, '/etc/apache2/other', item.fileName, force );
+  });
 }
 
 function updateCertificatesAndKeys(force, certificatesAndKeys, projectPath) {
@@ -37,7 +39,28 @@ function updateCertificatesAndKeys(force, certificatesAndKeys, projectPath) {
   }
 }
 
-function updateHttpdVhosts(force, ports, template, filename, directory = `${projectPath}/fds`) {
+function updateBarrelFile(fileContent, pathToWrite, fileName, force) {
+  if (!fs.existsSync(pathToWrite)) {
+    spawnSync(`sudo mkdir ${pathToWrite}`, [], {
+      shell: true,
+      stdio: 'inherit',
+    });
+  }
+  if (!fs.existsSync(`${pathToWrite}/${fileName}`) || force) {
+    fs.writeFileSync(`./${fileName}`, fileContent, 'utf8');
+    spawnSync(`sudo mv ./${fileName} ${pathToWrite}/${fileName}`, [], {
+      shell: true,
+      stdio: 'inherit',
+    });
+    winston.log('info', `${fileName} file created in ${pathToWrite}`);
+    return true;
+  }
+  winston.log('info', `${pathToWrite}/${fileName} already exists.`);
+  winston.log('info', 'To overwrite file(s), use --force');
+  return new Error('file already exists');
+}
+
+function updateHttpdVhosts(force, ports, template, filename, directory = `${projectPath}/others`) {
   if (!fs.existsSync(`${directory}`) || force) {
     spawnSync(`sudo mkdir ${directory}`, [], {
       shell: true,
@@ -51,7 +74,6 @@ function updateHttpdVhosts(force, ports, template, filename, directory = `${proj
     fs.writeFileSync(`./${filename}`, template, 'utf8');
     shell.exec(`sudo mv ./${filename} ${directory}/${filename}`);
     winston.log('info', `created ${directory}/${filename}`);
-    updateBarrelFile(force);
   } else {
     winston.log('info', `${directory}/${filename} already exists. To replace this file, run with --force`);
     throw new Error('file already exists');
@@ -60,7 +82,7 @@ function updateHttpdVhosts(force, ports, template, filename, directory = `${proj
 
 function initProxyServer(force, certificatesAndKeys, configBarrels, projectPath) {
   updateCertificatesAndKeys(force, certificatesAndKeys, projectPath);
-  updateBarrelFile(force, configBarrels, projectPath);
+  compileBarrelFileList(force, configBarrels);
   spawnSync('sudo apachectl restart', [], {
     shell: true,
   });
@@ -73,7 +95,7 @@ module.exports = class Apache {
 
   }
   init(force) {
-    const {projectPath, certificatesAndKeys, configBarrels } = store.getState().apache;
+    const {certificatesAndKeys, configBarrels, projectPath } = store.getState().apache;
     initProxyServer(force, certificatesAndKeys, configBarrels, projectPath);
   }
 };
