@@ -15,7 +15,7 @@ npm i @devly/devly-apache
 
 # Integration
 
-Use `addApacheConfig` action creator to update the apache state in the devly-store.  It is recommneded to place the initialState for apache in a `manifests/apache.js` file and requiring that file within the file that dispatches the action.
+Use `addApacheConfig` action creator to update the apache state in the devly-store.  It is recommended to place the initialState for apache in a `manifests/apache.js` file and requiring that file within the file that dispatches the action.
 
 ```js
 // mainfests/apache.js

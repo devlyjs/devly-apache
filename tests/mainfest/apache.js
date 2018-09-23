@@ -1,38 +1,31 @@
-const {
-  proxyServer: {
-    path: apacheRoot,
-  },
-} = require('../reapps-properties.json');
-const fdsBarrel = require('../templates/apache/fds-main')(apacheRoot);
-
 module.exports = {
-  projectPath: `${apacheRoot}`,
+  projectPath: '/etc/apache2',
   configBarrels: [
     {
-      fileName: 'fds-main.conf',
-      content: fdsBarrel,
+      fileName: 'test-main.conf',
+      content: 'some content',
       directory: 'other',
     },
   ],
   certificatesAndKeys: [
     {
       fileName: 'cert.crt',
-      content: secureMCrt,
+      content: 'some cert 1',
       directory: 'cert',
     },
     {
       fileName: 'cert.key',
-      content: secureMKey,
+      content: 'some key 1',
       directory: 'cert',
     },
     {
       fileName: 'server.crt',
-      content: snsNavAppCrt,
+      content: 'some cert 2',
       directory: 'cert',
     },
     {
       fileName: 'server.key',
-      content: snsNavAppKey,
+      content: 'some key 2',
       directory: 'cert',
     },
   ],
